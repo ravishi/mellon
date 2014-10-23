@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>Hello world</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="./styles/pure.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/main.css" />
+
+    <script>
+      /* React uses document and navigator globals. */
+      global.document = window.document;
+      global.navigator = window.navigator;
+
+      /* Monkeypatch React to accept some custom *nw* arguments just like
+         if they were *data-* arguments.
+
+         See the following links for more info:
+        
+         - https://github.com/rogerwang/node-webkit/wiki/Mini-browser-in-iframe
+         - https://groups.google.com/forum/#!msg/reactjs/grojr3kO13g/_hDwBQ4Bs04J
+       */
+      (function() {
+        require('react/lib/DOMProperty')._isCustomAttributeFunctions.push(
+          RegExp.prototype.test.bind(/^nw[a-z_][a-z\d_.\-]*$/)
+        );
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script>
+      var Main = require('./components/Main');
+      var React = require('react');
+      React.renderComponent(Main(null), document.getElementById('container'));
+    </script>
+  </body>
+</html>

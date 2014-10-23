@@ -1,0 +1,65 @@
+iframe.mellon-view {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.left {
+  height: 100%;
+  overflow-y: auto;
+  background: #ededed;
+}
+
+/*
+ * search
+ */
+
+.left .search form {
+  margin: 1em;
+}
+
+.left .search form input {
+  width: 100%;
+  padding: 0.4em;
+  padding-left: 0.6em;
+}
+
+/*
+ * result list
+ */
+
+.left > ul {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.left > ul > li {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.left > ul > li > a {
+  color: #444;
+  cursor: default;
+  display: block;
+  padding: 0.4em 1em 0.4em 1em;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  /* transparent border exists only to occupy the space,
+   * so when we change its color in the .selected version,
+   * it doesn't push anything up or down */
+  border-bottom: 1px solid rgba(255, 255, 255, 0);
+}
+
+.left > ul > li > a:hover {
+  background: #fdfdfd;
+}
+
+.left > ul > li > a.selected
+{
+  background: #ddd;
+  box-shadow: inset 2px 1px 1px #bbb;
+  border-bottom-color: #ccc;
+}

@@ -1,0 +1,25 @@
+{
+  "name": "mellon",
+  "version": "0.0.0",
+  "description": "The programmer's best friend",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ravishi/mellon"
+  },
+  "author": "Dirley Rodrigues <dirleyrls@gmail.com> (http://romenor.net/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ravishi/mellon/issues"
+  },
+  "dependencies": {
+    "node-jsx": "~0.11.0"
+  },
+  "devDependencies": {
+    "react-tools": "~0.11.2"
+  },
+  "main": "index.html",
+  "window": {
+    "toolbar": false
+  },
+  "homepage": "https://github.com/ravishi/mellon"
+}

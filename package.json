@@ -12,10 +12,21 @@
     "url": "https://github.com/ravishi/mellon/issues"
   },
   "dependencies": {
-    "node-jsx": "~0.11.0"
+    "gwend": "git://github.com/ravishi/gwend.git#master",
+    "react": "~0.11.2",
+    "nw-gyp": "~0.12.2"
   },
   "devDependencies": {
-    "react-tools": "~0.11.2"
+    "react-tools": "~0.11.2",
+    "node-webkit-builder": "~0.1.3"
+  },
+  "bundledDependencies": [
+    "gwend",
+    "nw-gyp"
+  ],
+  "scripts": {
+    "start": "./scripts/run.sh",
+    "postinstall": "./scripts/gyp-deps.sh"
   },
   "main": "index.html",
   "window": {

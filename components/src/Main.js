@@ -55,12 +55,13 @@ module.exports = React.createClass({
   handleSearch: function(query) {
     // clear current results
     this.setState({querying: query, results: []});
-    this.state.registry.queryEach(query, this.handleResult, function () {
-      console.log('done?');
-    });
+    if (query && query.trim().length) {
+      this.state.registry.queryEach(query, this.handleResult, function () {
+        // TODO stop the *searching animation* we'll soon create
+      });
+    }
   },
   handleItemSelected: function(url) {
-    console.log(url);
     this.setState({selected: url});
   },
   render: function() {

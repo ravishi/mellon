@@ -1,7 +1,20 @@
 /** @jsx React.DOM */
+var path = require('path');
 var React = require('react');
 var gwend = require('gwend');
 var Search = require('./Search');
+var appdirs = require('./appdirs.js');
+
+function resultUrl(r) {
+  var url = ('file:///' + r.docset.info.path +
+             '/Contents/Resources/Documents/' + r.path);
+
+  if (r.anchor) {
+    url += '#' + r.anchor;
+  }
+
+  return url;
+}
 
 var ResultList = React.createClass({
   handleClick: function(e) {
@@ -19,7 +32,7 @@ var ResultList = React.createClass({
   render: function() {
     var _this_component = this;
     var createItem = function(item) {
-      var url = 'file:///' + item.docset.info.path + '/Contents/Resources/Documents/' + item.path + '#' + item.anchor;
+      var url = resultUrl(item);
       var label = item.docset.info.name.toLowerCase();
 
       /* FIXME Shouldn't we compare the url with the url of the iframe? */
@@ -37,9 +50,10 @@ var ResultList = React.createClass({
 
 module.exports = React.createClass({
   getInitialState: function() {
+    var datadir = appdirs.userDataDir('mellon');
     var registry = new gwend.DocsetRegistry();
 
-    registry.scanFolder('/home/dirley/.local/share/mellon/docsets');
+    registry.scanFolder(path.join(datadir, 'docsets'));
 
     return {
       results: [],

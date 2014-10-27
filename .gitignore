@@ -1,6 +1,5 @@
-components/.module-cache/
-components/*.js
-node-webkit-v*
+src/components/.module-cache/
+src/components/*.js
 
 # The rest was created by https://www.gitignore.io
 

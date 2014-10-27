@@ -28,7 +28,7 @@
     "start": "./scripts/run.sh",
     "postinstall": "./scripts/gyp-deps.sh"
   },
-  "main": "index.html",
+  "main": "src/index.html",
   "window": {
     "toolbar": false
   },

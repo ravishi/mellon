@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 var path = require('path');
+var crypto = require('crypto');
 var React = require('react');
 var gwend = require('gwend');
 var Search = require('./Search');
@@ -16,7 +17,16 @@ function resultUrl(r) {
   return url;
 }
 
+function resultUniqueId(r) {
+  var sha1 = crypto.createHash('sha1');
+  sha1.update(['docset:/', r.docset.info.name, r.name, r.path, r.anchor].join('/'));
+  return sha1.digest('hex');
+}
+
 var ResultList = React.createClass({
+  getInitialState: function() {
+    return {selected: null};
+  },
   handleClick: function(e) {
     e.preventDefault();
 
@@ -27,23 +37,34 @@ var ResultList = React.createClass({
       target = target.parentElement;
     }
 
-    this.props.onSelectItem(url || null);
+    // Isn't there an API to get the node's key?
+    var uid = target.getAttribute('data-reactid').split('$')[1];
+
+    var selected = {uid: uid, url: url};
+    this.setState({selected: selected});
+    this.props.onSelectUrl(selected.url);
   },
   render: function() {
     var _this_component = this;
+
     var createItem = function(item) {
-      var url = resultUrl(item);
       var label = item.docset.info.name.toLowerCase();
 
       /* FIXME Shouldn't we compare the url with the url of the iframe? */
-      var link_class = (_this_component.props.selected == url ? "selected" : null);
+      var className = (_this_component.state.selected.uid == item.uid ? 'selected' : null);
+
       return (
         <li>
-          <a href={url} className={link_class}
-            onClick={_this_component.handleClick}>{label}: {item.name}</a>
+          <a
+            key={item.uid}
+            href={item.url}
+            className={className}
+            onClick={_this_component.handleClick}
+            >{label}: {item.name}</a>
         </li>
       );
     };
+
     return <ul>{this.props.items.map(createItem)}</ul>;
   }
 });
@@ -63,6 +84,8 @@ module.exports = React.createClass({
     };
   },
   handleResult: function(err, r) {
+    r['url'] = resultUrl(r);
+    r['uid'] = resultUniqueId(r);
     var nextResults = this.state.results.concat([r]);
     this.setState({results: nextResults});
   },
@@ -75,7 +98,7 @@ module.exports = React.createClass({
       });
     }
   },
-  handleItemSelected: function(url) {
+  handleSelectedUrlChanged: function(url) {
     this.setState({selected: url});
   },
   render: function() {
@@ -83,7 +106,7 @@ module.exports = React.createClass({
       <div className="pure-g">
         <div className="left pure-u-6-24">
           <Search onSearchSubmit={this.handleSearch} />
-          <ResultList items={this.state.results} selected={this.state.selected} onSelectItem={this.handleItemSelected} />
+          <ResultList items={this.state.results} selected={this.state.selected} onSelectUrl={this.handleSelectedUrlChanged} />
         </div>
         <div className="pure-u-18-24">
           <iframe nwdisable nwfaketop className="mellon-view" src={this.state.selected}></iframe>

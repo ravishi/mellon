@@ -50,8 +50,10 @@ var ResultList = React.createClass({
     var createItem = function(item) {
       var label = item.docset.info.name.toLowerCase();
 
-      /* FIXME Shouldn't we compare the url with the url of the iframe? */
-      var className = (_this_component.state.selected.uid == item.uid ? 'selected' : null);
+      var className = (
+        (_this_component.state.selected &&
+         _this_component.state.selected.uid == item.uid)
+          ? 'selected' : null);
 
       return (
         <li>

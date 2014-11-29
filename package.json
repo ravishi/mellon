@@ -13,11 +13,11 @@
   },
   "dependencies": {
     "gwend": "git://github.com/ravishi/gwend.git#master",
-    "react": "~0.11.2",
-    "nw-gyp": "~0.12.2"
+    "node-jsx": "^0.12.4",
+    "nw-gyp": "~0.12.2",
+    "react": "^0.12.1"
   },
   "devDependencies": {
-    "react-tools": "~0.11.2",
     "node-webkit-builder": "~0.1.3"
   },
   "bundledDependencies": [
@@ -25,12 +25,12 @@
     "nw-gyp"
   ],
   "scripts": {
-    "start": "./scripts/run.sh",
+    "start": "node \"$(which nwbuild)\" -v 0.10.5 -r .",
     "postinstall": "./scripts/gyp-deps.sh"
   },
   "main": "src/index.html",
   "window": {
-    "toolbar": false
+    "toolbar": true
   },
   "homepage": "https://github.com/ravishi/mellon"
 }

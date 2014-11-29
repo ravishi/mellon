@@ -1,10 +1,9 @@
-/** @jsx React.DOM */
 var path = require('path');
 var crypto = require('crypto');
 var React = require('react');
 var gwend = require('gwend');
-var Search = require('./Search');
-var appdirs = require('./appdirs.js');
+var Search = require('./Search.jsx');
+var appdirs = require('../appdirs.js');
 
 function resultUrl(r) {
   var url = ('file:///' + r.docset.info.path +
